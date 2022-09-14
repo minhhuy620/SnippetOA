@@ -1,7 +1,8 @@
 package SnippetOA.snippet_oa.controller;
 
+import SnippetOA.snippet_oa.dto.SnippetDto;
 import SnippetOA.snippet_oa.entity.Snippet;
-import SnippetOA.snippet_oa.service.impl.SnippetServiceImpl;
+import SnippetOA.snippet_oa.service.SnippetService;
 import SnippetOA.snippet_oa.wrapper.ApiWrapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,11 +19,16 @@ public class SnippetController {
 	private static final Logger LOGGER = LogManager.getLogger(SnippetController.class);
 
 	@Autowired
-	private SnippetServiceImpl snippetServiceImpl;
+	private SnippetService snippetService;
 
 	@GetMapping("/init")
-	public ResponseEntity<ApiWrapper> getDataSnippet(){
-		ApiWrapper data = snippetServiceImpl.getSnippet();
+	public ResponseEntity<ApiWrapper> getAllSnippets(){
+		ApiWrapper data = snippetService.getAllSnippets();
+		return ResponseEntity.ok(data);
+	}
+	@PostMapping("/save")
+	public ResponseEntity<ApiWrapper> createSnippet(@RequestBody SnippetDto snippet) {
+		ApiWrapper data = snippetService.saveSnippet(snippet);
 		return ResponseEntity.ok(data);
 	}
 //	@PostMapping("/queue/ticket/add")
